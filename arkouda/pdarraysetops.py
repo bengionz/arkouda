@@ -25,7 +25,7 @@ if TYPE_CHECKING:
 else:
     Categorical = TypeVar("Categorical")
 
-__all__ = ["in1d", "concatenate", "union1d", "intersect1d", "setdiff1d", "setxor1d", "indexof1d"]
+__all__ = ["in1d", "concatenate", "union1d", "intersect1d", "setdiff1d", "setxor1d", "indexof1d", "times2"]
 
 logger = getArkoudaLogger(name="pdarraysetops")
 
@@ -128,6 +128,27 @@ def _in1d_single(
     else:
         raise TypeError("Both pda1 and pda2 must be pdarray, Strings, or Categorical")
 
+
+@typechecked
+def times2(pda: pdarray) -> pdarray:
+    """
+    Returns a pdarray with each entry double that of the input.
+
+    Parameters
+    ----------
+    pda : pdarray
+        The array to double.
+
+    Returns
+    -------
+    pdarray
+        The doubled array
+    """
+    if isinstance(pda, pdarray):
+        repMsg = generic_msg(cmd=f"times2<{pda.dtype},{pda.ndim}>", args={"arg1" : pda})
+        return create_pdarray(repMsg)
+    else:
+        raise TypeError("times2 only supports pdarrays.")
 
 @typechecked
 def in1d(

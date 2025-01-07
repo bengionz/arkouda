@@ -28,7 +28,7 @@ module ArraySetopsMsg
     private config const logLevel = ServerConfig.logLevel;
     private config const logChannel = ServerConfig.logChannel;
     const asLogger = new Logger(logLevel, logChannel);
-    
+
     /*
     Parse, execute, and respond to a intersect1d message
     :arg reqMsg: request containing (cmd,name,name2,assume_unique)
@@ -134,6 +134,16 @@ module ArraySetopsMsg
                asLogger.error(getModuleName(),getRoutineName(),getLineNumber(),errorMsg);                  
                return new MsgTuple(errorMsg, MsgType.ERROR);
            }
+        }
+    }
+
+    @arkouda.registerCommand
+    proc times2(const ref arg1: [?d] ?t): [d] t {
+        if t == bool {
+            return arg1;
+        } else {
+            var ret = arg1 * 2;
+            return ret;
         }
     }
 
